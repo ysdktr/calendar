@@ -35,7 +35,14 @@
           start: '2023-09-12T10:30:00',
           end: '2023-09-12T12:30:00'
         }
-      ]
+      ],
+
+      eventDidMount: function(info) {
+        if (info.event.title === 'イベクエ') {
+          info.el.querySelector('.fc-time').textContent = '8/12 17:00 - 8/31 16:59';
+        }
+      }
+      
     });
 
     calendar.render();
