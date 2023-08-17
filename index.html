@@ -24,11 +24,6 @@
         minute: '2-digit',
         hour12: false
       },
-      eventContent: function(info) {
-        return {
-          html: '<b>' + info.timeText + ' - ' + info.event.title + '</b>'
-        };
-      },
       events: [
         {
           title: 'イベクエ',
@@ -40,7 +35,8 @@
           start: '2023-09-12T10:30:00',
           end: '2023-09-12T12:30:00'
         }
-      ]
+      ],
+      eventDisplay: 'block' // イベントの表示方法を設定
     });
 
     calendar.render();
