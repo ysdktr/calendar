@@ -3,40 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-big-calendar/0.36.0/stylesheet/react-big-calendar.min.css">
-  <title>React Big Calendar Example</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-  </style>
+  <title>タイトル</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.1/umd/react.development.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.1/umd/react-dom.development.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-big-calendar/0.36.0/react-big-calendar.min.js"></script>
+
+  <div id='calendar'></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
   <script>
-    const { Calendar } = ReactBigCalendar;
 
-    const events = [
-      {
-        start: new Date(),
-        end: new Date(),
-        title: 'Sample Event',
-      },
-      // Add more events as needed
-    ];
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
 
-    ReactDOM.render(
-      React.createElement(Calendar, {
-        events: events,
-        startAccessor: "start",
-        endAccessor: "end",
-        defaultDate: new Date(),
-      }),
-      document.getElementById('root')
-    );
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridYear,dayGridMonth,timeGridWeek'
+        },
+        initialView: 'dayGridYear',
+        initialDate: '2023-01-12',
+        locale: 'ja',
+        editable: true,
+        selectable: true,
+        dayMaxEvents: true,
+        events: [
+          {
+            title: 'Meeting',
+            start: '2023-08-12T17:00:00',
+            end: '2023-08-31T16:59:59'
+          },
+          {
+            title: 'Lunch',
+            start: '2023-01-12T12:00:00',
+            end: '2023-08-25T13:00:00'
+          }
+        ],
+        eventRender: function(info) {
+          var eventEl = info.el;
+          var eventEnd = info.event.end;
+
+          var endText = document.createElement('div');
+          endText.innerText = "終了: " + eventEnd.format('HH:mm');
+
+          eventEl.appendChild(endText);
+        }
+      });
+
+      calendar.render();
+    });
+
   </script>
 </body>
 </html>
