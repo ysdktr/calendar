@@ -7,8 +7,9 @@
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.js"></script>
   <title>カレンダー表示</title>
 </head>
+<body>
+<div id="calendar"></div>
 <script>
-
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
@@ -24,6 +25,12 @@
         minute: '2-digit',
         hour12: false
       },
+      eventRender: function(info) {
+        var start = info.event.start;
+        var end = info.event.end;
+        var formattedTime = formatDate(start) + ' - ' + formatDate(end);
+        info.el.querySelector('.fc-time').innerHTML = formattedTime;
+      },
       events: [
         {
           title: 'イベクエ',
@@ -35,31 +42,21 @@
           start: '2023-09-12T10:30:00',
           end: '2023-09-12T12:30:00'
         }
-      ],
-      eventDisplay: 'block' // イベントの表示方法を設定
+      ]
     });
 
     calendar.render();
   });
 
+  function formatDate(date) {
+    return new Intl.DateTimeFormat('ja-JP', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    }).format(date);
+  }
 </script>
-<style>
-
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-</style>
-</head>
-<body>
-<div id="calendar"></div>
 </body>
 </html>
