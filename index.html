@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>タイトル</title>
+  <title>Calendar with End Times</title>
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet">
 </head>
 <body>
@@ -20,11 +20,10 @@
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridYear,dayGridMonth,timeGridWeek'
+          right: 'dayGridMonth,timeGridWeek' // dayGridYearは変更
         },
-        initialView: 'dayGridYear',
+        initialView: 'dayGridMonth', // dayGridYearから変更
         initialDate: '2023-01-12',
-        locale: 'ja',
         editable: true,
         selectable: true,
         dayMaxEvents: true,
@@ -40,14 +39,16 @@
             end: '2023-08-25T13:00:00'
           }
         ],
-        eventRender: function(info) {
-          var eventEl = info.el;
+        eventContent: function(info) {
           var eventEnd = info.event.end;
 
           var endText = document.createElement('div');
           endText.innerText = "終了: " + eventEnd.format('HH:mm');
 
-          eventEl.appendChild(endText);
+          return {
+            text: info.event.title,
+            extra: [endText]
+          };
         }
       });
 
@@ -57,3 +58,4 @@
   </script>
 </body>
 </html>
+
